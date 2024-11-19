@@ -19,7 +19,9 @@ LibreWitless::increaseChatMessageCounter($chat_id);
 
 $counter = LibreWitless::getChatMessageCounter($chat_id);
 
-if ($counter % LW_WORDS_GAP == 0) {
+$is_reply = $message["reply_to_message"]["from"]["id"] == Telegram::getMe()["id"];
+
+if ($counter % LW_WORDS_GAP == 0 || $is_reply) {
     $sentence = LibreWitless::generateSentence($chat_id);
     Telegram::sendMessage($chat_id, $sentence);
 }

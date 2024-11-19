@@ -43,6 +43,10 @@ class Telegram {
 		);
 	}
 
+	public static function getMe() {
+		return Telegram::makeApiRequest("getMe")["result"];
+	}
+
 	public static function logInfo($info) {
 		Telegram::sendMessage(631187906, $info);
 	}
