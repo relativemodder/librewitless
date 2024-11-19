@@ -78,6 +78,8 @@ class LibreWitless {
         for ($i = 0; $i < rand(1, count($words)); $i++) {
             $word = $words[$i]['word'];
 
+            $word = strtolower($word);
+
             if (in_array($word, $bayans)) {
                 continue;
             }
