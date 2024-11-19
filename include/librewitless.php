@@ -10,6 +10,17 @@ class LibreWitless {
         return explode(" ", $text);
     }
 
+    public static function filterWord($word) {
+        $word = str_replace(".", "", $word);
+        $word = str_replace(",", "", $word);
+        $word = str_replace("(", "", $word);
+        $word = str_replace(")", "", $word);
+        $word = trim($word);
+        $word = strtolower($word);
+
+        return $word;
+    }
+
     public static function learnFromText($chat_id, $text) {
         $words = LibreWitless::parseWords($text);
 
@@ -18,6 +29,7 @@ class LibreWitless {
 		$cursor = Database::getCursor();
 
         foreach ($words as $word) {
+            $word = LibreWitless::filterWord($word);
             $query_get = $cursor->prepare("SELECT count(*) FROM lw_words WHERE `chat_id` = ? AND `word` LIKE ?");
             $query_get->execute([ $chat_id, '%' . $word . '%' ]);
 
@@ -26,10 +38,6 @@ class LibreWitless {
             if ($count > 0) {
                 continue; 
             }
-
-            $word = str_replace([".,/!()"], ["      "], $word);
-            $word = trim($word);
-            $word = strtolower($word);
 
             $query = $cursor->prepare("INSERT INTO lw_words (`chat_id`, `word`) VALUES (?, ?)");
             $query->execute([$chat_id, $word]);
@@ -77,8 +85,7 @@ class LibreWitless {
 
         for ($i = 0; $i < rand(1, count($words)); $i++) {
             $word = $words[$i]['word'];
-
-            $word = strtolower($word);
+            $word = LibreWitless::filterWord($word);
 
             if (in_array($word, $bayans)) {
                 continue;
