@@ -18,6 +18,19 @@ class LibreWitless {
 		$cursor = Database::getCursor();
 
         foreach ($words as $word) {
+            $query_get = $cursor->prepare("SELECT count(*) FROM lw_words WHERE `chat_id` = ? AND `word` LIKE ?");
+            $query_get->execute([ $chat_id, '%' . $word . '%' ]);
+
+            $count = $query_get->fetchColumn();
+
+            if ($count > 0) {
+                continue; 
+            }
+
+            $word = str_replace([".,/!()"], ["      "], $word);
+            $word = trim($word);
+            $word = strtolower($word);
+
             $query = $cursor->prepare("INSERT INTO lw_words (`chat_id`, `word`) VALUES (?, ?)");
             $query->execute([$chat_id, $word]);
         }
