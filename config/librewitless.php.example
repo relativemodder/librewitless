@@ -1,0 +1,6 @@
+<?php
+
+// rename the file to librewitless.php
+
+const LW_URL_BASE = "https://mybaseaddress.com";
+const LW_WORDS_GAP = 10;

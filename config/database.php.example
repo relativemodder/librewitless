@@ -1,0 +1,8 @@
+<?php
+
+// rename it to database.php
+
+const DB_HOST = "host";
+const DB_USER = "user_librewitless";
+const DB_NAME = "user_librewitless";
+const DB_PASSWORD = "pa$$w0rd";

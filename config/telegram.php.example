@@ -1,0 +1,5 @@
+<?php
+
+// rename the file to telegram.php
+
+const TOKEN = "1234567:OMGOMGOMGOMTOKENTOKENTOKENTOKEN";
