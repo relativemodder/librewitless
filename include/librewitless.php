@@ -88,6 +88,8 @@ class LibreWitless {
             $sentence[] = $word;
         }
 
+        sort($sentence);
+
         return implode(" ", $sentence);
     }
 
